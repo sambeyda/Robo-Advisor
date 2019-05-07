@@ -1,6 +1,6 @@
 #Robo Advisor Testing
 
-from app.robo_advisor import to_usd
+from robot_advisor import to_usd
 
 def test_to_usd(): #Taken from executive dashboard testing
     #Tests whether number is returned with $ sign and two decimal places
