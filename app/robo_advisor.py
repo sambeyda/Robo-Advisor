@@ -10,16 +10,15 @@ from dotenv import load_dotenv
 import datetime
 from statistics import stdev
 
-
+def to_usd(stock_price): 
+    return "${0:,.2f}".format(stock_price)
+    
 load_dotenv()
 #
 # INFO INPUTS 
 #
 
 ##USD formatting function from shopping cart project
-def to_usd(my_price): 
-    return "${0:,.2f}".format(my_price)
-
 if __name__ == "__main__":
 
     api_key= os.environ.get("API_KEY")
