@@ -1,5 +1,4 @@
 #Robo Advisor Testing
-import os
 
 from App.robo_advisor import to_usd
 
