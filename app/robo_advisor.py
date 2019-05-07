@@ -10,8 +10,14 @@ from dotenv import load_dotenv
 import datetime
 from statistics import stdev
 
+api_key= os.environ.get("API_KEY")
 def to_usd(stock_price): 
     return "${0:,.2f}".format(stock_price)
+def compile_url(stock_symbol):
+    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock_symbol}&apikey={api_key}"
+    response = requests.get(request_url)
+    parsed_response = json.loads(response.text)
+    return parsed_response
     
 load_dotenv()
 #
@@ -21,31 +27,27 @@ load_dotenv()
 ##USD formatting function from shopping cart project
 if __name__ == "__main__":
 
-    api_key= os.environ.get("API_KEY")
     #print(api_key)
 
     #
     ##USER INPUTTING STOCK SYMBOL
     #
-
     #Adapted from Ta's solution https://github.com/hiepnguyen034/robo-stock/blob/master/robo_advisor.py
     while True:  
-        symbol=input('Enter the stock symbol you want: ')
-        if symbol == "DONE": # Allows user to exit code if their symbol does not exist
+        stock_symbol=input('Enter the stock symbol you want: ')
+        if stock_symbol == "DONE": # Allows user to exit code if their symbol does not exist
             exit()
         else:
-            if not symbol.isalpha(): #Validation check if symbol is only alphabet letters!
+            if not stock_symbol.isalpha(): #Validation check if symbol is only alphabet letters!
                 print('Please make sure to stock symbol in AAAA form')
             else: 
-                request_url= f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}"
-                response= requests.get(request_url)
-                if 'Error' in response.text:
+                parsed_response=compile_url(stock_symbol)
+                if 'Error' in parsed_response:
                     print("Your desired stock does not exit. Try again or enter 'DONE' to exit")
                 else:
                     break
-
     #Parse response from request
-    parsed_response= json.loads(response.text)
+    #####parsed_response= json.loads(response.text)
     tsd= parsed_response["Time Series (Daily)"]
     dates= list(tsd.keys())
     recent_day= dates[0]
@@ -90,7 +92,7 @@ if __name__ == "__main__":
     ## INFO OUTPUT
     #  
     print("-----------------------")
-    print(f"STOCK SYMBOL: {symbol}") #Takes user stock symbol
+    print(f"STOCK SYMBOL: {stock_symbol}") #Takes user stock symbol
     print("-----------------------")
     print("REQUESTING STOCK MARKET DATA") 
     print("REQUEST AT: ",datetime.datetime.now().strftime("%m-%d-%Y %I:%M %p")) #datetime module for user access time
