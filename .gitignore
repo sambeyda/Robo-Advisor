@@ -2,3 +2,7 @@
 
 # ignore secret environment variable values
 .env
+
+.cache
+
+__pycache__
