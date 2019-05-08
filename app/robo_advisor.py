@@ -10,16 +10,37 @@ from dotenv import load_dotenv
 import datetime
 from statistics import stdev
 
+
+load_dotenv()
 api_key= os.environ.get("API_KEY")
 def to_usd(stock_price): 
     return "${0:,.2f}".format(stock_price)
 def compile_url(stock_symbol):
     request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock_symbol}&apikey={api_key}"
+    return request_url
+def get_response(request_url):
     response = requests.get(request_url)
     parsed_response = json.loads(response.text)
     return parsed_response
-    
-load_dotenv()
+
+# def write_to_csv(csv_file_path):
+#     csv_headers= ["timestamp", "open", "high", "low", "close", "volume"] #creating headers from alpha csv file
+#     with open(csv_file_path, "w") as csv_file: # 
+#         writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
+#         writer.writeheader() # uses fieldnames of the headers above
+#         for date in dates:
+#             daily_prices = tsd[date]
+#             writer.writerow({
+#                 "timestamp": date,
+#                 "open": daily_prices["1. open"],
+#                 "high": daily_prices["2. high"],
+#                 "low": daily_prices["3. low"],
+#                 "close": daily_prices["4. close"],
+#                 "volume": daily_prices["5. volume"],
+#             })
+#     return True
+
+
 #
 # INFO INPUTS 
 #
@@ -41,13 +62,14 @@ if __name__ == "__main__":
             if not stock_symbol.isalpha(): #Validation check if symbol is only alphabet letters!
                 print('Please make sure to stock symbol in AAAA form')
             else: 
-                parsed_response=compile_url(stock_symbol)
-                if 'Error' in parsed_response:
+                request_url=compile_url(stock_symbol)
+                if 'Error' in request_url:
                     print("Your desired stock does not exit. Try again or enter 'DONE' to exit")
                 else:
                     break
     #Parse response from request
     #####parsed_response= json.loads(response.text)
+    parsed_response=get_response(request_url)
     tsd= parsed_response["Time Series (Daily)"]
     dates= list(tsd.keys())
     recent_day= dates[0]
@@ -86,8 +108,8 @@ if __name__ == "__main__":
                 "low": daily_prices["3. low"],
                 "close": daily_prices["4. close"],
                 "volume": daily_prices["5. volume"],
-            })
-    
+        })
+    #write_to_csv(csv_file_path)
     #    
     ## INFO OUTPUT
     #  
