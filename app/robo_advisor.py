@@ -13,16 +13,20 @@ from statistics import stdev
 
 load_dotenv()
 api_key= os.environ.get("API_KEY")
+#Refactoring price formatting logic: Taken from previous examples
 def to_usd(stock_price): 
     return "${0:,.2f}".format(stock_price)
+#Refactoring compile url logic: Compiles url with given symbol and secret api_key
 def compile_url(stock_symbol):
     request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock_symbol}&apikey={api_key}"
     return request_url
+#Refactoring issuing API requests: Uses JSON to convert parsed response into dictionary
 def get_response(request_url):
     response = requests.get(request_url)
     parsed_response = json.loads(response.text)
     return parsed_response
 
+#Refactoring write to csv logic: COULD NOT GET TO RUN PROPERLY
 # def write_to_csv(csv_file_path):
 #     csv_headers= ["timestamp", "open", "high", "low", "close", "volume"] #creating headers from alpha csv file
 #     with open(csv_file_path, "w") as csv_file: # 
@@ -45,7 +49,6 @@ def get_response(request_url):
 # INFO INPUTS 
 #
 
-##USD formatting function from shopping cart project
 if __name__ == "__main__":
 
     #print(api_key)
@@ -68,7 +71,6 @@ if __name__ == "__main__":
                 else:
                     break
     #Parse response from request
-    #####parsed_response= json.loads(response.text)
     parsed_response=get_response(request_url)
     tsd= parsed_response["Time Series (Daily)"]
     dates= list(tsd.keys())

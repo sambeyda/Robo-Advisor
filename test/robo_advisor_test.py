@@ -1,6 +1,6 @@
 #Robo Advisor Testing
 
-from app.robo_advisor import to_usd, compile_url, api_key
+from app.robo_advisor import to_usd, compile_url, api_key, get_response
 import os
 
 #Basic Challenge
@@ -21,12 +21,16 @@ def test_compile_url():
     result = compile_url(stock_symbol)
     assert result == f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MU&apikey={api_key}"
 
-    #parsed_response = compile_url(stock_symbol)
+#Intermediate Challenge 
+def test_get_response():
+    #request_url=compile_url(stock_symbol)
+    stock_symbol= "MU"
+    parsed_response = get_response(compile_url(stock_symbol))
 
-    #assert isinstance(parsed_response, dict) #Checks if its in proper original format: Dictionary
-    #assert "Meta Data" in parsed_response.keys() #Checks whether correct header
-    #assert "Time Series (Daily)" in parsed_response.keys() #''
-    #assert parsed_response["Meta Data"]["2. Symbol"] == stock_symbol #Checks whether Symbol is in fact Correct!
+    assert isinstance(parsed_response, dict) #Checks if its in proper original format: Dictionary
+    assert "Meta Data" in parsed_response.keys() #Checks whether correct header
+    assert "Time Series (Daily)" in parsed_response.keys() #''
+    assert parsed_response["Meta Data"]["2. Symbol"] == stock_symbol #Checks whether Symbol is in fact Correct!
 #Intermediate Challenge
 #def test_write_to_csv():
     #Setting up example data output
