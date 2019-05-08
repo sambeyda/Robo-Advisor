@@ -25,6 +25,10 @@ def get_response(request_url):
     response = requests.get(request_url)
     parsed_response = json.loads(response.text)
     return parsed_response
+# Refactoring time stamp formatting logic: Ensures that human friendly current date/time is displayed
+#Taken from shopping cart
+def human_friendly_timestamp(date_time):
+    return date_time.strftime("%m-%d-%Y %I:%M %p")
 
 #Refactoring write to csv logic: COULD NOT GET TO RUN PROPERLY
 # def write_to_csv(csv_file_path):
@@ -119,7 +123,7 @@ if __name__ == "__main__":
     print(f"STOCK SYMBOL: {stock_symbol}") #Takes user stock symbol
     print("-----------------------")
     print("REQUESTING STOCK MARKET DATA") 
-    print("REQUEST AT: ",datetime.datetime.now().strftime("%m-%d-%Y %I:%M %p")) #datetime module for user access time
+    print("REQUEST AT: ",human_friendly_timestamp(datetime.datetime.now()))  #datetime module for user access time
     print("-----------------------")
     print(f"LATEST DAY: {last_refreshed}") # Last refreshed stock data from alpha advantage
     print(f"LATEST CLOSE: {to_usd(float(latest_closing_price))}") #latest closing price from alpha

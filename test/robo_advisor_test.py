@@ -1,7 +1,8 @@
 #Robo Advisor Testing
 
-from app.robo_advisor import to_usd, compile_url, api_key, get_response
+from app.robo_advisor import to_usd, compile_url, api_key, get_response, human_friendly_timestamp
 import os
+import datetime
 
 #Basic Challenge
 def test_to_usd(): #Taken from executive dashboard testing
@@ -31,7 +32,9 @@ def test_get_response():
     assert "Meta Data" in parsed_response.keys() #Checks whether correct header
     assert "Time Series (Daily)" in parsed_response.keys() #''
     assert parsed_response["Meta Data"]["2. Symbol"] == stock_symbol #Checks whether Symbol is in fact Correct!
-#Intermediate Challenge
+
+
+#Intermediate Challenge: Could not get this to work properly
 #def test_write_to_csv():
     #Setting up example data output
     #example_data = [
@@ -50,3 +53,8 @@ def test_get_response():
 
     #assert expectation == True #Checks if CSV was written
     #assert os.path.isfile(csv_file_path) == True
+
+#Basic challenge: Taken from shopping cart example
+def test_human_friendly_timestamp():
+    #Tests whether checkout time date and time is displayed properly
+    assert human_friendly_timestamp(datetime.datetime.now()) == datetime.datetime.now().strftime("%m-%d-%Y %I:%M %p")
