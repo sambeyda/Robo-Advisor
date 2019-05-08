@@ -1,0 +1,4 @@
+requests
+pytest
+python-dotenv
+pandas
