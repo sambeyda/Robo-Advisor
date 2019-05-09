@@ -1,8 +1,12 @@
 # "Robo Adivsor" Project
 
-A solution for the ["Robo Advisor" project](https://github.com/sambeyda/Robo-Advisor/blob/master/Robo-Advisor-Master/App/robo_advisor.py)
+[Original product description](https://github.com/prof-rossetti/georgetown-opim-243-201901/blob/master/projects/robo-advisor.md)
 
-Issues requests to the [AlphaVantage Stock Market API](https://alphavantage.co/) in order to provide automated stock or cryptocurrency trading reccommendations.
+This application issues requests to the [AlphaVantage Stock Market API](https://alphavantage.co/) in order to provide automated stock trading recommendations.
+
+##Monitor Badge Status
+
+[![Build Status](https://travis-ci.com/sambeyda/Robo-Advisor.svg?branch=revisited-testing)](https://travis-ci.com/sambeyda/Robo-Advisor)
 
 ## Prerequisities
 
@@ -15,14 +19,17 @@ Issues requests to the [AlphaVantage Stock Market API](https://alphavantage.co/)
 Clone or download [this repository](https://github.com/sambeyda/Robo-Advisor) onto your computer
 Then navigate to there from the command line:
 
-'''sh
+```
 cd Robo-Advisor-Master
-'''
+```
 
-Use Anaconda to create a new virtual environment where you will download package dependencies
-
-'''sh
+Perhaps in a virtual environment, install required package dependencies
+```
+pip install -r requirements.txt
+```
+These depedencies are:
 pip install requests, csv, os, json, python-dotenv, datetime,statistics
+
 
 ## Setup
 
@@ -36,5 +43,21 @@ After obtaining an API Key, create a new file in this repository called ".env", 
 
 Run the robo_advisor tool script to find your stock recommendation
 
-'''py
+```
 python app/robo_advisor.py
+```
+
+From here you will be prompted to enter the stock symbol over your choice, and subsequently be presented with your specific stock's necessary metrics, as well as a unique recommendation.
+
+##TESTING
+
+To test, install the `pytest` package if necessary, perhaps within a virtual environment
+```
+pip install pytest
+``` 
+And invoke it from the root directory of this repository to run tests:
+
+```py
+pytest
+```
+
