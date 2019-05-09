@@ -4,7 +4,7 @@
 
 This application issues requests to the [AlphaVantage Stock Market API](https://alphavantage.co/) in order to provide automated stock trading recommendations.
 
-##Monitor Badge Status
+## Monitor Badge Status
 
 [![Build Status](https://travis-ci.com/sambeyda/Robo-Advisor.svg?branch=revisited-testing)](https://travis-ci.com/sambeyda/Robo-Advisor)
 
